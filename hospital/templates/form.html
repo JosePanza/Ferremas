@@ -1,0 +1,44 @@
+{% extends './base.html' %}
+
+{% block title %} crear {% endblock %}
+
+{% block body %}
+{% load static %}
+
+<!DOCTYPE html>
+<br>
+<head>
+    <title>Agregar Producto</title>
+</head>
+<body>
+    <h1>Agregar producto y artista</h1>
+    <form method="post" action="{% url 'forms' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <br></br>
+       
+        <label for="nombre_usuario">Nombre Artista:</label>
+        <input type="text" name="nombre_usuario" required><br></br>
+        <label for="descripcion">Descripcion:</label>
+        <input type="text" name="descripcion" required><br></br>
+        <label for="img">imagen:</label>
+        <input type="file" name="img" required><br></br>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+</body>
+</html>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<script>
+    document.getElementById("submit_button").addEventListener("click", function() {
+        this.disabled = true;
+        this.form.submit();
+    });
+</script>
+{% endblock %}
+
+

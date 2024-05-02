@@ -1,0 +1,45 @@
+{% extends "./base.html" %}
+
+
+{% block title %}Lista {% endblock %}
+
+{% block body %}
+{% load static %}
+
+<!DOCTYPE html>
+<br>
+<head>
+    <title>Lista de artistas</title>
+</head>
+
+
+<table class="table table-striped" style="background-color: rgb(255, 255, 255);">
+    <thead>
+      <tr>
+        <th>user</th>
+        <th>ID</th>
+        <th>Nombre Artista</th>
+        <th>descripcion</th>
+        <th>img</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for usuario in usuarios %}
+      <tr>
+        <td>{{ usuario.user }}</td>
+        <td>{{ usuario.ID_usuario }}</td>
+        <td>{{ usuario.nombre_usuario }}</td>
+        <td>{{ usuario.descripcion }}</td>
+        <td>{{ img }}</td>
+         </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  
+
+   <a href="{% url 'forms'%}" class="btn btn-primary">Agregar</a>
+<br></br>
+</body>
+</html>
+
+{% endblock  %}

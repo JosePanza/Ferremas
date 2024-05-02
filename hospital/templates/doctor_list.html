@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<h1>Doctores</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor Details</title>
+</head>
+<body>
+    <h1>detalles</h1>
+    <div>
+        <h2>{{ doctor.name }}</h2>
+        <p>Specialization: {{ doctor.specialization }}</p>
+        <!-- Agrega más campos según sea necesario -->
+    </div>
+</body>
+</html>
+{% endblock %}
