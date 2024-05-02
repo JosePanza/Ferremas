@@ -25,9 +25,17 @@ def profile_view(request):
     return render(request, 'profile.html', context)
 
 
-def doctor_list_view(request):
+def Productos_view(request):
     doctors = Doctor.objects.all()
-    return render(request, 'doctor_list.html', {'doctors': doctors})
+    return render(request, 'Productos.html', {'doctors': doctors})
+
+def Pintura_view(request):
+    pintura = Doctor.objects.all()
+    return render(request, 'Productos.html', {'pintura': pintura})
+
+def Seguridad_view(request):
+    seguridad = Doctor.objects.all()
+    return render(request, 'Productos.html', {'seguridad': seguridad})
 
 
 def patient_list(request, patient_id):

@@ -4,8 +4,10 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
-    path('doctors/', views.doctor_list_view, name='doctor_list'),
+    path('doctors/', views.Productos_view, name='Productos'),
     path('patients/', views.patient_list, name='patient_list'),
+    path('pintura/', views.Pintura_view, name='Pintura'),
+    path('seguridad/', views.Seguridad_view, name='Seguridad'),
     path('', views.inicio, name='inicio'),
     
     #crud

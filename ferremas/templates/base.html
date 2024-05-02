@@ -15,7 +15,17 @@
 
    <!-- Bootstrap icons-->
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+   
 </head>
+<div class="nav-right">
+  <li class="nav-item">
+      <a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a>
+  </li>
+</div>
+</div>
+
+
+
 <body>
     <header id="header"> 
         <nav class="navbar navbar-expand-lg navbar-light">
@@ -33,7 +43,15 @@
                 </li>
     
                 <li class="nav-item">
-                  <a class="nav-link active " aria-current="page" href="{% url 'doctor_list'%}">doctores</a>
+                  <a class="nav-link active " aria-current="page" href="{% url 'Productos'%}">Productos</a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link active " aria-current="page" href="{% url 'Pintura'%}">Pintura</a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link active " aria-current="page" href="{% url 'Seguridad'%}">Seguridad</a>
                 </li>
                 
                 
@@ -55,9 +73,6 @@
                   <li class="nav-item">
                     <a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a>
                   </li> 
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'registro' %}">Registro</a>
-                  </li>
                 </div>     
               {% endif %}
               </ul>
