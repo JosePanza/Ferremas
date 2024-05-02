@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('hospital', '0003_remove_usuario_user'),
+        ('ferremas', '0003_remove_usuario_user'),
     ]
 
     operations = [

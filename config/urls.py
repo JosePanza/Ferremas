@@ -5,8 +5,8 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('hospital/', include('hospital.urls')),
-    path('', include('hospital.urls')), 
+    path('ferremas/', include('ferremas.urls')),
+    path('', include('ferremas.urls')), 
     
     
 ]

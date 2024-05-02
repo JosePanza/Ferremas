@@ -6,13 +6,13 @@ class Doctor(models.Model):
     name = models.CharField(max_length=100)
     specialization = models.CharField(max_length=100)
     class Meta:
-        app_label = 'hospital'
+        app_label = 'ferremas'
 
 class Patient(models.Model):
     name = models.CharField(max_length=100)
     age = models.IntegerField()
     class Meta:
-        app_label = 'hospital'
+        app_label = 'ferremas'
 
 class Appointment(models.Model):
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
