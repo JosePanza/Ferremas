@@ -10,7 +10,11 @@
     <img src="https://http2.mlstatic.com/D_NQ_NP_613308-MLA74406138908_022024-O.webp" alt="Imagen del Producto 1" style="width: 200px; height: auto;">
     <p>Descripción del producto 1</p>
     <p>Precio: $7.990</p>
-    <button type="button">Agregar al carrito</button>
+    <form method="post" action="{% url 'Carrito' %}">
+        {% csrf_token %}
+        <input type="hidden" name="producto_id" value="1">
+        <button type="submit">Agregar al carrito</button>
+    </form>
     <!-- Agrega más detalles según sea necesario -->
 </div>
 
@@ -20,7 +24,11 @@
     <img src="https://www.ferreteriacerda.cl/autoadministracion/bodegatec/catalogo/fotos_chicas/208-1.jpeg" alt="Imagen del Producto 2" style="width: 200px; height: auto;">
     <p>Descripción del producto 2</p>
     <p>Precio: $7.990</p>
-    <button type="button">Agregar al carrito</button>
+    <form method="post" action="{% url 'Carrito' %}">
+        {% csrf_token %}
+        <input type="hidden" name="producto_id" value="1">
+        <button type="submit">Agregar al carrito</button>
+    </form>
     <!-- Agrega más detalles según sea necesario -->
 </div>
 
@@ -29,10 +37,33 @@
     <img src="https://ferreteriaferromaq.cl/wp-content/uploads/2021/04/rrss-2-2.png" alt="Imagen del Producto 2" style="width: 200px; height: auto;">
     <p>Descripción del producto 3</p>
     <p>Precio: $7.990</p>
-    <button type="button">Agregar al carrito</button>
+    <form method="post" action="{% url 'Carrito' %}">
+        {% csrf_token %}
+        <input type="hidden" name="producto_id" value="1">
+        <button type="submit">Agregar al carrito</button>
+    </form>
     <!-- Agrega más detalles según sea necesario -->
 </div>
 
 <!-- Agrega más tarjetas de productos según sea necesario -->
+
+<script>
+    // Asigna un ID único a cada botón automáticamente
+    document.querySelectorAll('.add-to-cart').forEach((button, index) => {
+        button.setAttribute('data-product-id', index + 1);
+    });
+
+    // Captura el evento de clic en los botones "Agregar al carrito"
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', () => {
+            // Obtiene el ID del producto desde el atributo data-product-id
+            const productId = button.getAttribute('data-product-id');
+            // Agrega el ID del producto al arreglo Productos
+            Productos.push(productId);
+            // Muestra un mensaje de éxito (puedes implementarlo según tus necesidades)
+            alert('Producto agregado al carrito con éxito.');
+        });
+    });
+</script>
 
 {% endblock %}

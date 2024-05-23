@@ -1,31 +1,20 @@
-from .models import  Doctor, Usuario
 from django.contrib import messages
-from django.contrib.auth import logout
-from django.contrib.auth import login as auth_login
+from django.contrib.auth import login as auth_login, logout, authenticate
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.db import IntegrityError
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.http import HttpResponse
-
+from django.shortcuts import render, redirect
+from django.views.decorators.http import require_POST
+from .models import Producto
 
 
 @login_required
 def profile_view(request):
-   
     user = request.user
-    
-   
-    
-    context = {
-        'user': user,
-        
-    }
-    
+    context = {'user': user}
     return render(request, 'profile.html', context)
-
 
 def Productos_view(request):
     return render(request, 'Productos.html')
@@ -36,16 +25,8 @@ def Pintura_view(request):
 def Seguridad_view(request):
     return render(request, 'Seguridad.html')
 
-
-def patient_list(request, patient_id):
-    patient = patient.objects.all()
-    return render(request, 'patient_list.html', {'patient': patient})
-
 def inicio(request):
     return render(request, 'inicio.html')
-
-def login (request):
-    return render(request, "login.html")
 
 def login_view(request):
     if request.method == 'GET':
@@ -59,68 +40,55 @@ def login_view(request):
             if user is not None:
                 auth_login(request, user)
                 return redirect('inicio')
-        # Si la autenticación falla, redirigir al usuario a la página de inicio de sesión con un mensaje de error.
         return render(request, 'login.html', {'form': form, 'error': 'Nombre de usuario o contraseña incorrectos'})
+
 def registro_view(request):
     if request.method == 'GET':
-        return render(request, 'registro.html', {
-            'form': UserCreationForm
-        })
+        return render(request, 'registro.html', {'form': UserCreationForm()})
     else:
         if request.POST['password1'] == request.POST['password2']:
-                try:
-                    user = User.objects.create_user(
+            try:
+                user = User.objects.create_user(
                     username=request.POST['username'],
-                    password =request.POST['password1'])
-                    user.save()
-                    login(request)
-                    return redirect('inicio')
-                except IntegrityError:
-                    return render(request, 'registro.html', {
-                    'form': UserCreationForm,
-                    "error" : 'Usuario ya existe'
+                    password=request.POST['password1']
+                )
+                user.save()
+                auth_login(request, user)  # Autenticar al usuario después de registrarse
+                messages.success(request, '¡Te has registrado correctamente!')
+                return redirect('inicio')
+            except IntegrityError:
+                return render(request, 'registro.html', {
+                    'form': UserCreationForm(),
+                    'error': 'El usuario ya existe'
                 })
-            
         return render(request, 'registro.html', {
-                    'form': UserCreationForm,
-                    "error" : 'La contraseña no coincide'
-                })
+            'form': UserCreationForm(),
+            'error': 'Las contraseñas no coinciden'
+        })
+
 def logout_view(request):
     logout(request)
     return redirect('inicio')
-
-#test
-def forms(request):
+    
+def Carrito(request):
     if request.method == 'POST':
-        formulario = usuariosform(request.POST, request.FILES)
-        if formulario.is_valid():
-            formulario.save()  # Guarda el usuario en la base de datos
-            messages.success(request, '¡Usuario creado exitosamente!')
-            return redirect('inicio')  # Reemplaza 'exito' con el nombre de la URL de tu página de éxito
-    else:
-        formulario = usuariosform()
-        messages.success(request,'cita no creada, 1')
-    
-    return render(request, 'form.html', {'formulario': formulario})
+        # Verifica si el formulario contiene datos
+        if 'producto_id' in request.POST:
+            # Obtén el ID del producto del formulario POST
+            producto_id = request.POST.get('producto_id')
+            # Aquí deberías agregar lógica para agregar el producto al carrito
+            # Por ejemplo, podrías usar sesiones para almacenar los productos en el carrito
+            # Aquí asumiré que tienes una lista de productos en la sesión llamada 'carrito'
+            if 'carrito' not in request.session:
+                request.session['carrito'] = []
+            request.session['carrito'].append(producto_id)
+            request.session.modified = True  # Asegurarse de que se guarden los cambios en la sesión
+            # Redirigir de vuelta a la página de carrito después de agregar el producto
+            return redirect('Carrito')
+        else:
+            # Si no se proporcionó un producto_id en el formulario, redirige a alguna página de error
+            return redirect('pagina_de_error')
 
-def cita_list(request):
- 
-    usuarios = Usuario.objects.all()
-    print(usuarios)
-    return render(request, 'cita_list.html', {'usuarios': usuarios})
-
-
-
-
-    
-
-
-
-
-
-
-
-    
-    
-
-
+    # Si no es una solicitud POST, simplemente renderiza la página del carrito como antes
+    productos = Producto.objects.all()
+    return render(request, 'Carrito.html', {'productos': productos})

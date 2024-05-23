@@ -3,7 +3,7 @@
 <html lang="es">
 
 <head>
-  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1"/>
   <title>Hospital galenos</title>
   <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
@@ -53,6 +53,7 @@
               <a class="nav-link active " aria-current="page" href="{% url 'Seguridad'%}">Seguridad</a>
             </li>
 
+
             <div class="nav-right">
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a>
@@ -69,9 +70,11 @@
               <li class="navbar-nav">
                 <a class="nav-link">¡Bienvenido, {{ user.username }}!</a>
               </li>
+
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'cita_list' %}">Carrito</a>
+                <a class="nav-link" href="{% url 'Carrito' %}">Carrito</a>
               </li>
+
             </div>
             {% else %}
 

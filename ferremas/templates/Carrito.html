@@ -1,0 +1,50 @@
+{% extends "./base.html" %}
+
+{% block title %}Carrito de Compras{% endblock %}
+
+{% block body %}
+{% load static %}
+
+<h1>Carrito de Compras</h1>
+
+{% if productos %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre del Producto</th>
+                <th>Descripción</th>
+                <th>Imagen</th>
+                <th>Precio</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for producto in productos %}
+            <tr>
+                <td>{{ producto.id }}</td>
+                <td>{{ producto.nombre }}</td>
+                <td>{{ producto.descripcion }}</td>
+                <td><img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" style="width: 100px;"></td>
+                <td>${{ producto.precio }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+<table class="table table-striped">
+<thead>
+    <tr>
+        <th>ID</th>
+        <th>Nombre del Producto</th>
+        <th>Descripción</th>
+        <th>Imagen</th>
+        <th>Precio</th>
+    </tr>
+</thead>
+</table>
+    <p>No hay productos en el carrito.</p>
+{% endif %}
+
+<a href="{% url 'inicio' %}" class="btn btn-primary">Volver a la Tienda</a>
+
+{% endblock %}

@@ -9,6 +9,5 @@ class usuariosform(forms.ModelForm):
    
         fields = '__all__' 
 
-
-
-
+class AgregarAlCarritoForm(forms.Form):
+    cantidad = forms.IntegerField(min_value=1, label='Cantidad')
