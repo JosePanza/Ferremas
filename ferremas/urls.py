@@ -16,7 +16,7 @@ urlpatterns = [
     path('registro/', views.registro_view, name='registro'),
     path('accounts/profile/', views.profile_view, name='profile'),
     path('Carrito_views/', views.Carrito_views, name='Carrito_views'),
-
-    path('Carrito/', views.Carrito_views, name='Carrito'),
+    path('forms/', views.forms, name='forms'),
+    path('Carrito/', views.Carrito_views, name='Carrito')
   
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

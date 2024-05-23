@@ -7,9 +7,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_POST
-from .models import Producto
+from .models import Productos
 from django.http import JsonResponse,HttpResponse
-from .forms import ProductoForm
+from .forms import ProductosForm
 
 
 
@@ -91,10 +91,23 @@ def Carrito_views(request):
 
 def agregar_al_carrito(request):
     if request.method == 'POST':
-        form = ProductoForm(request.POST)
+        form = ProductosForm(request.POST)
         if form.is_valid():
             form.save()
             return JsonResponse({'message': 'Producto agregado exitosamente'})
     else:
-        form = ProductoForm()
+        form = ProductosForm()
     return JsonResponse({'error': 'Error al procesar la solicitud'}, status=400)
+
+def forms(request):
+    if request.method == 'POST':
+        formulario = ProductosForm(request.POST, request.FILES)
+        if formulario.is_valid():
+            formulario.save()  # Guarda el usuario en la base de datos
+            messages.success(request, '¡Usuario creado exitosamente!')
+            return redirect('inicio')  # Reemplaza 'exito' con el nombre de la URL de tu página de éxito
+    else:
+        formulario = ProductosForm()
+        messages.success(request,'cita no creada, 1')
+    
+    return render(request, 'form.html', {'formulario': formulario})

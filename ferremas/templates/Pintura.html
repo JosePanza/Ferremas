@@ -10,12 +10,11 @@
     <img src="https://http2.mlstatic.com/D_NQ_NP_613308-MLA74406138908_022024-O.webp" alt="Imagen del Producto 1" style="width: 200px; height: auto;">
     <p class="product-description">Descripción del producto 1</p>
     <p class="product-price">Precio: $7.990</p>
-    <form method="post">
+    <form method="post" class="product-form">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Agregar Producto</button>
+        <button type="button" class="add-to-cart" data-product-id="1">Agregar al carrito</button>
     </form>
-    
     <!-- Agrega más detalles según sea necesario -->
 </div>
 
@@ -25,22 +24,21 @@
     <img src="https://www.ferreteriacerda.cl/autoadministracion/bodegatec/catalogo/fotos_chicas/208-1.jpeg" alt="Imagen del Producto 2" style="width: 200px; height: auto;">
     <p class="product-description">Descripción del producto 2</p>
     <p class="product-price">Precio: $7.990</p>
-    <form method="post" action="{% url 'Carrito_views' %}">
-
+    <form method="post" class="product-form">
         {% csrf_token %}
-        <input type="hidden" name="producto_id" value="2">
-        <button type="button" class="add-to-cart" data-product-id="2">Agregar al carrito</button>
+        {{ form.as_p }}
+        <button type="button" class="add-to-cart" data-product-id="1">Agregar al carrito</button>
     </form>
     <!-- Agrega más detalles según sea necesario -->
 </div>
 
+<!-- Tarjeta de producto 3 -->
 <div class="product-card">
     <h2 class="product-title">Pintura verde</h2>
     <img src="https://ferreteriaferromaq.cl/wp-content/uploads/2021/04/rrss-2-2.png" alt="Imagen del Producto 3" style="width: 200px; height: auto;">
     <p class="product-description">Descripción del producto 3</p>
     <p class="product-price">Precio: $7.990</p>
     <form method="post" action="{% url 'Carrito_views' %}">
-
         {% csrf_token %}
         <input type="hidden" name="producto_id" value="3">
         <button type="button" class="add-to-cart" data-product-id="3">Agregar al carrito</button>
@@ -48,33 +46,43 @@
     <!-- Agrega más detalles según sea necesario -->
 </div>
 
-
 <!-- Agrega más tarjetas de productos según sea necesario -->
 
 <script>
-    // Captura el evento de clic en los botones "Agregar al carrito"
-    document.querySelectorAll('.add-to-cart').forEach(button => {
-        button.addEventListener('click', () => {
-            // Obtiene la información del producto desde los elementos HTML dentro del div .product-card
-            const productCard = button.closest('.product-card');
-            const nombre = productCard.querySelector('.product-title').textContent;
-            const descripcion = productCard.querySelector('.product-description').textContent;
-            const precio = productCard.querySelector('.product-price').textContent;
+document.addEventListener('DOMContentLoaded', function() {
+    var addToCartButtons = document.querySelectorAll('.add-to-cart');
+    addToCartButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            var productCard = button.closest('.product-card');
+            var productId = button.getAttribute('data-product-id');
+            var productTitle = productCard.querySelector('.product-title').innerText;
+            var productDescription = productCard.querySelector('.product-description').innerText;
+            var productPrice = productCard.querySelector('.product-price').innerText.replace('Precio: ', '');
 
-            // Muestra la información del producto en la consola para depuración
-            console.log('Nombre:', nombre);
-            console.log('Descripción:', descripcion);
-            console.log('Precio:', precio);
-
-            // Si todo está funcionando correctamente hasta aquí, ahora podrías enviar esta información al servidor mediante una solicitud AJAX
-            // Puedes usar fetch u otra librería como Axios para enviar la solicitud al servidor
+            if (productId === '1') {
+                // Mostrar en consola para producto 1
+                console.log('Producto 1 agregado al carrito:');
+                console.log('ID:', productId);
+                console.log('Título:', productTitle);
+                console.log('Descripción:', productDescription);
+                console.log('Precio:', productPrice);
+            } else if (productId === '2') {
+                // Mostrar en consola para producto 2
+                console.log('Producto 3 agregado al carrito:');
+                console.log('ID:', productId);
+                console.log('Título:', productTitle);
+                console.log('Descripción:', productDescription);
+                console.log('Precio:', productPrice);
+            } else if (productId === '3') {
+                // Mostrar en consola para producto 3
+                console.log('Producto 3 agregado al carrito:');
+                console.log('ID:', productId);
+                console.log('Título:', productTitle);
+                console.log('Descripción:', productDescription);
+                console.log('Precio:', productPrice);
+            }
         });
     });
+});
 </script>
-
-
-
-
-
-
 {% endblock %}
