@@ -2,6 +2,8 @@ from django.db import models
 from typing import Any,Dict, Tuple
 from django.contrib.auth.models import User
 
+from django.shortcuts import render, HttpResponse
+
 class Doctor(models.Model):
     name = models.CharField(max_length=100)
     specialization = models.CharField(max_length=100)
@@ -30,3 +32,9 @@ class Usuario(models.Model):
 
     def __str__(self):
         return str(self.ID_usuario)
+    
+    
+
+
+    
+

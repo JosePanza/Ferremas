@@ -1,45 +1,52 @@
 {% extends "./base.html" %}
 
-
-{% block title %}Lista {% endblock %}
+{% block title %}Carrito de Compras{% endblock %}
 
 {% block body %}
 {% load static %}
 
 <!DOCTYPE html>
-<br>
+<html lang="en">
 <head>
-    <title>Lista de artistas</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras</title>
 </head>
+<body>
 
+<h1>Carrito de Compras</h1>
 
-<table class="table table-striped" style="background-color: rgb(255, 255, 255);">
-    <thead>
-      <tr>
-        <th>user</th>
-        <th>ID</th>
-        <th>Nombre Artista</th>
-        <th>descripcion</th>
-        <th>img</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for usuario in usuarios %}
-      <tr>
-        <td>{{ usuario.user }}</td>
-        <td>{{ usuario.ID_usuario }}</td>
-        <td>{{ usuario.nombre_usuario }}</td>
-        <td>{{ usuario.descripcion }}</td>
-        <td>{{ img }}</td>
-         </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  
+{% if productos_carrito %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in productos_carrito %}
+                <tr>
+                    <td>{{ item.producto.nombre }}</td>
+                    <td>{{ item.producto.descripcion }}</td>
+                    <td>${{ item.producto.precio }}</td>
+                    <td>{{ item.cantidad }}</td>
+                    <td>${{ item.producto.precio|floatformat:2 }} * {{ item.cantidad }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No hay productos en el carrito.</p>
+{% endif %}
 
-   <a href="{% url 'forms'%}" class="btn btn-primary">Agregar</a>
-<br></br>
+<a href="{% url 'forms' %}" class="btn btn-primary">Agregar Producto</a>
+
 </body>
 </html>
 
-{% endblock  %}
+{% endblock %}
+

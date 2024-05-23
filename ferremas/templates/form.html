@@ -1,44 +1,25 @@
-{% extends './base.html' %}
+{% extends 'base.html' %}
 
-{% block title %} crear {% endblock %}
+{% block title %} Agregar Producto al Carrito {% endblock %}
 
 {% block body %}
 {% load static %}
 
-<!DOCTYPE html>
-<br>
-<head>
-    <title>Agregar Producto</title>
-</head>
-<body>
-    <h1>Agregar producto y artista</h1>
-    <form method="post" action="{% url 'forms' %}" enctype="multipart/form-data">
-        {% csrf_token %}
-        <br></br>
-       
-        <label for="nombre_usuario">Nombre Artista:</label>
-        <input type="text" name="nombre_usuario" required><br></br>
-        <label for="descripcion">Descripcion:</label>
-        <input type="text" name="descripcion" required><br></br>
-        <label for="img">imagen:</label>
-        <input type="file" name="img" required><br></br>
-        <button type="submit" class="btn btn-primary">Guardar</button>
-    </form>
-</body>
-</html>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+<h1>Agregar Producto al Carrito</h1>
 
-<script>
-    document.getElementById("submit_button").addEventListener("click", function() {
-        this.disabled = true;
-        this.form.submit();
-    });
-</script>
+<form method="post" action="{% url 'agregar_al_carrito' %}">
+    {% csrf_token %}
+    <input type="hidden" name="producto_id" value="{{ producto.id }}">
+    <h2>{{ producto.nombre }}</h2>
+    <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" style="width: 200px; height: auto;">
+    <p>{{ producto.descripcion }}</p>
+    <p>Precio: ${{ producto.precio }}</p>
+    <button type="submit" class="btn btn-primary">Agregar al carrito</button>
+</form>
+
+<a href="{% url 'cita_list' %}" class="btn btn-primary">Volver al Carrito</a>
+
 {% endblock %}
+
 
 

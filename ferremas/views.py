@@ -2,13 +2,15 @@ from .models import  Doctor, Usuario
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth import login as auth_login
-from .forms import usuariosform
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.db import IntegrityError
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
+from django.http import HttpResponse
+
+
 
 @login_required
 def profile_view(request):
@@ -26,16 +28,13 @@ def profile_view(request):
 
 
 def Productos_view(request):
-    doctors = Doctor.objects.all()
-    return render(request, 'Productos.html', {'doctors': doctors})
+    return render(request, 'Productos.html')
 
 def Pintura_view(request):
-    pintura = Doctor.objects.all()
-    return render(request, 'Productos.html', {'pintura': pintura})
+    return render(request, 'Pintura.html')
 
 def Seguridad_view(request):
-    seguridad = Doctor.objects.all()
-    return render(request, 'Productos.html', {'seguridad': seguridad})
+    return render(request, 'Seguridad.html')
 
 
 def patient_list(request, patient_id):
@@ -109,6 +108,18 @@ def cita_list(request):
     usuarios = Usuario.objects.all()
     print(usuarios)
     return render(request, 'cita_list.html', {'usuarios': usuarios})
+
+
+
+
+    
+
+
+
+
+
+
+
     
     
 

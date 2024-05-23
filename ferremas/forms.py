@@ -8,3 +8,7 @@ class usuariosform(forms.ModelForm):
         #fields = ['user,'ID_usuario', 'nombre_usuario', 'descripcion', 'img'] 
    
         fields = '__all__' 
+
+
+
+
