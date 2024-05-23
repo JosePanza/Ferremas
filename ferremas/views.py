@@ -8,6 +8,9 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_POST
 from .models import Producto
+from django.http import JsonResponse,HttpResponse
+from .forms import ProductoForm
+
 
 
 @login_required
@@ -70,25 +73,28 @@ def logout_view(request):
     logout(request)
     return redirect('inicio')
     
-def Carrito(request):
+
+
+def Carrito_views(request):
     if request.method == 'POST':
-        # Verifica si el formulario contiene datos
-        if 'producto_id' in request.POST:
-            # Obtén el ID del producto del formulario POST
-            producto_id = request.POST.get('producto_id')
-            # Aquí deberías agregar lógica para agregar el producto al carrito
-            # Por ejemplo, podrías usar sesiones para almacenar los productos en el carrito
-            # Aquí asumiré que tienes una lista de productos en la sesión llamada 'carrito'
+        producto_id = request.POST.get('producto_id')
+        if producto_id:
             if 'carrito' not in request.session:
                 request.session['carrito'] = []
             request.session['carrito'].append(producto_id)
-            request.session.modified = True  # Asegurarse de que se guarden los cambios en la sesión
-            # Redirigir de vuelta a la página de carrito después de agregar el producto
-            return redirect('Carrito')
-        else:
-            # Si no se proporcionó un producto_id en el formulario, redirige a alguna página de error
-            return redirect('pagina_de_error')
+            request.session.modified = True
+        return redirect('Carrito')
+    else:
+        # Si la solicitud no es POST, simplemente renderiza la página del carrito con los productos actuales
+        productos = Producto.objects.all()
+        return render(request, 'Carrito.html', {'productos': productos})
 
-    # Si no es una solicitud POST, simplemente renderiza la página del carrito como antes
-    productos = Producto.objects.all()
-    return render(request, 'Carrito.html', {'productos': productos})
+def agregar_al_carrito(request):
+    if request.method == 'POST':
+        form = ProductoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'message': 'Producto agregado exitosamente'})
+    else:
+        form = ProductoForm()
+    return JsonResponse({'error': 'Error al procesar la solicitud'}, status=400)

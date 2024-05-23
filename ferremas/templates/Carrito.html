@@ -11,20 +11,17 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Nombre del Producto</th>
-                <th>Descripción</th>
-                <th>Imagen</th>
+                <th>Descripción</th>    
                 <th>Precio</th>
             </tr>
         </thead>
         <tbody>
             {% for producto in productos %}
             <tr>
-                <td>{{ producto.id }}</td>
                 <td>{{ producto.nombre }}</td>
                 <td>{{ producto.descripcion }}</td>
-                <td><img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" style="width: 100px;"></td>
+                
                 <td>${{ producto.precio }}</td>
             </tr>
             {% endfor %}
