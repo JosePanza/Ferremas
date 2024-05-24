@@ -86,7 +86,7 @@ def Carrito_views(request):
         return redirect('Carrito')
     else:
         # Si la solicitud no es POST, simplemente renderiza la página del carrito con los productos actuales
-        productos = Producto.objects.all()
+        productos = Productos.objects.all()
         return render(request, 'Carrito.html', {'productos': productos})
 
 def agregar_al_carrito(request):
