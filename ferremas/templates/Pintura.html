@@ -27,7 +27,7 @@
     <form method="post" class="product-form">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="button" class="add-to-cart" data-product-id="1">Agregar al carrito</button>
+        <button type="button" class="add-to-cart" data-product-id="2">Agregar al carrito</button>
     </form>
     <!-- Agrega más detalles según sea necesario -->
 </div>
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log('Precio:', productPrice);
             } else if (productId === '2') {
                 // Mostrar en consola para producto 2
-                console.log('Producto 3 agregado al carrito:');
+                console.log('Producto 2 agregado al carrito:');
                 console.log('ID:', productId);
                 console.log('Título:', productTitle);
                 console.log('Descripción:', productDescription);
@@ -85,4 +85,5 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+
 {% endblock %}
