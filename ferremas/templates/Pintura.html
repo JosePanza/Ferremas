@@ -10,13 +10,15 @@
     <img src="https://http2.mlstatic.com/D_NQ_NP_613308-MLA74406138908_022024-O.webp" alt="Imagen del Producto 1" style="width: 200px; height: auto;">
     <p class="product-description">Descripción del producto 1</p>
     <p class="product-price">Precio: $7.990</p>
-    <form method="post" class="product-form">
+    <form action="{% url 'agregar_al_carrito' %}" method="post" class="d-inline">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="button" class="add-to-cart" data-product-id="1">Agregar al carrito</button>
+        <input type="hidden" name="producto_id" value="{{ producto.id_producto }}">
+            <button type="submit" class="btn btn-secondary">Añadir al carrito</button>
     </form>
-    <!-- Agrega más detalles según sea necesario -->
 </div>
+
+
+
 
 <!-- Tarjeta de producto 2 -->
 <div class="product-card">
@@ -24,10 +26,10 @@
     <img src="https://www.ferreteriacerda.cl/autoadministracion/bodegatec/catalogo/fotos_chicas/208-1.jpeg" alt="Imagen del Producto 2" style="width: 200px; height: auto;">
     <p class="product-description">Descripción del producto 2</p>
     <p class="product-price">Precio: $7.990</p>
-    <form method="post" class="product-form">
+    <form action="{% url 'agregar_al_carrito' %}" method="post" class="d-inline">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="button" class="add-to-cart" data-product-id="2">Agregar al carrito</button>
+        <input type="hidden" name="producto_id" value="{{ producto.id }}">
+        <button type="submit" class="btn btn-secondary">Añadir al carrito</button>
     </form>
     <!-- Agrega más detalles según sea necesario -->
 </div>
@@ -38,12 +40,51 @@
     <img src="https://ferreteriaferromaq.cl/wp-content/uploads/2021/04/rrss-2-2.png" alt="Imagen del Producto 3" style="width: 200px; height: auto;">
     <p class="product-description">Descripción del producto 3</p>
     <p class="product-price">Precio: $7.990</p>
-    <form method="post" action="{% url 'Carrito_views' %}">
+    <form method="post" class="product-form">
         {% csrf_token %}
-        <input type="hidden" name="producto_id" value="3">
+        {{ form.as_p }}
         <button type="button" class="add-to-cart" data-product-id="3">Agregar al carrito</button>
     </form>
     <!-- Agrega más detalles según sea necesario -->
+</div>
+
+<div class="container mt-5">
+    {% if mensaje %}
+    <div class="alert alert-warning" role="alert">
+        {{ mensaje }}
+    </div>
+    {% endif %}
+    <div class="row">
+        {% for producto in Productos %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <img src="..." class="card-img-top" alt="{{ producto.nombre }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ producto.nombre }}</h5>
+                    <p class="card-text">${{ producto.precio }}</p>
+                    <p class="card-text">
+                        <small class="text-muted">
+                            {% if producto.cantidad > 0 %}
+                                Cantidad en stock: {{ producto.cantidad }}
+                            {% else %}
+                                <span class="text-danger">Sin stock</span>
+                            {% endif %}
+                        </small>
+                    </p>
+                    <form action="{% url 'agregar_al_carrito' %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <input type="hidden" name="producto_id" value="{{ producto.id }}">
+                        {% if producto.cantidad > 0 %}
+                            <button type="submit" class="btn btn-secondary">Añadir al carrito</button>
+                        {% else %}
+                            <button type="button" class="btn btn-secondary" disabled>Sin stock</button>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 </div>
 
 <!-- Agrega más tarjetas de productos según sea necesario -->
@@ -85,5 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="{% static 'js/cart.js' %}"></script>
 
 {% endblock %}

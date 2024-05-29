@@ -13,6 +13,8 @@ from .forms import ProductosForm
 
 
 
+
+
 @login_required
 def profile_view(request):
     user = request.user
@@ -75,39 +77,53 @@ def logout_view(request):
     
 
 
-def Carrito_views(request):
-    if request.method == 'POST':
-        producto_id = request.POST.get('producto_id')
-        if producto_id:
-            if 'carrito' not in request.session:
-                request.session['carrito'] = []
-            request.session['carrito'].append(producto_id)
-            request.session.modified = True
-        return redirect('Carrito')
-    else:
-        # Si la solicitud no es POST, simplemente renderiza la página del carrito con los productos actuales
-        productos = Productos.objects.all()
-        return render(request, 'Carrito.html', {'productos': productos})
+def mostrar_carrito(request):
+    carrito = request.session.get('carrito', {})
+    if not isinstance(carrito, dict):
+        carrito = {}
+
+    # Filtrar claves válidas y convertir a enteros
+    claves_validas = [int(key) for key in carrito.keys() if key.isdigit()]
+
+    productos = Productos.objects.filter(id_producto__in=claves_validas)
+    cantidades = {int(k): v for k, v in carrito.items() if k.isdigit()}
+    total = sum(producto.precio * cantidades[producto.id_producto] for producto in productos)
+
+    return render(request, 'Carrito.html', {
+        'productos': productos,
+        'cantidades': cantidades,
+        'total': total,
+    })
+
+def vaciar_carrito(request):
+    if 'carrito' in request.session:
+        del request.session['carrito']
+    return redirect('mostrar_carrito')
 
 def agregar_al_carrito(request):
-    if request.method == 'POST':
-        form = ProductosForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return JsonResponse({'message': 'Producto agregado exitosamente'})
-    else:
-        form = ProductosForm()
-    return JsonResponse({'error': 'Error al procesar la solicitud'}, status=400)
+    if request.method == "POST":
+        id_producto = request.POST.get('id_producto')
+        print(f"Producto ID recibido: {id_producto}")
+        
+        if not id_producto:
+            messages.error(request, "No se pudo añadir el producto al carrito. ID del producto no recibido.")
+            return redirect('Pintura')
+        
+        carrito = request.session.get('carrito', {})
+        total_productos = sum(carrito.values())
+        print(f"Total de productos antes de añadir: {total_productos}")
+        print(f"Contenido del carrito antes de añadir: {carrito}")
 
-def forms(request):
-    if request.method == 'POST':
-        formulario = ProductosForm(request.POST, request.FILES)
-        if formulario.is_valid():
-            formulario.save()  # Guarda el usuario en la base de datos
-            messages.success(request, '¡Usuario creado exitosamente!')
-            return redirect('inicio')  # Reemplaza 'exito' con el nombre de la URL de tu página de éxito
-    else:
-        formulario = ProductosForm()
-        messages.success(request,'cita no creada, 1')
-    
-    return render(request, 'form.html', {'formulario': formulario})
+        if total_productos < 10:
+            if id_producto in carrito:
+                carrito[id_producto] += 1
+            else:
+                carrito[id_producto] = 1
+            request.session['carrito'] = carrito
+            messages.success(request, "Producto añadido al carrito.")
+        else:
+            messages.error(request, "No puedes añadir más de 10 productos en una sola compra.")
+        
+        print(f"Contenido del carrito después de añadir: {carrito}")
+        
+    return redirect('Pintura')

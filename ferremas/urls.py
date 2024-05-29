@@ -15,8 +15,12 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('registro/', views.registro_view, name='registro'),
     path('accounts/profile/', views.profile_view, name='profile'),
-    path('Carrito_views/', views.Carrito_views, name='Carrito_views'),
-    path('forms/', views.forms, name='forms'),
-    path('Carrito/', views.Carrito_views, name='Carrito')
+
+    #carrito
+
+    path('agregar/', views.agregar_al_carrito, name='agregar_al_carrito'),
+    path('Carrito/', views.mostrar_carrito, name='mostrar_carrito'),
+    path('vaciar/', views.vaciar_carrito, name='vaciar_carrito')
+
   
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
