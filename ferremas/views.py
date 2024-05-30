@@ -7,10 +7,14 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_POST
-from .models import Productos
+from .models import articulo, Carrito
 from django.http import JsonResponse,HttpResponse
 from .forms import ProductosForm
-
+from transbank.webpay.webpay_plus.transaction import Transaction, WebpayOptions
+import hashlib
+from django.conf import settings
+from transbank.common.integration_type import IntegrationType
+from django.urls import reverse
 
 
 
@@ -78,52 +82,111 @@ def logout_view(request):
 
 
 def mostrar_carrito(request):
-    carrito = request.session.get('carrito', {})
-    if not isinstance(carrito, dict):
-        carrito = {}
+    articulos = articulo.objects.all()  # Obtienes todos los artículos, ajusta según tu lógica de negocio.
+    total = sum(float(articulo.precio) for articulo in articulos)  # Calcula el total.
+    print("Artículos:", articulos)
+    print("Total:", total)
+    return render(request, 'Carrito.html', {'articulos': articulos, 'total': total})
 
-    # Filtrar claves válidas y convertir a enteros
-    claves_validas = [int(key) for key in carrito.keys() if key.isdigit()]
 
-    productos = Productos.objects.filter(id_producto__in=claves_validas)
-    cantidades = {int(k): v for k, v in carrito.items() if k.isdigit()}
-    total = sum(producto.precio * cantidades[producto.id_producto] for producto in productos)
 
-    return render(request, 'Carrito.html', {
-        'productos': productos,
-        'cantidades': cantidades,
-        'total': total,
-    })
+def vaciar_carrito(request):
+    if request.method == "POST":
+        # Elimina todos los artículos del carrito
+        articulo.objects.all().delete()
+
+        # Redirecciona al usuario a donde desees
+        return redirect(request.META.get('HTTP_REFERER', 'Productos'))
+
+    # Maneja el caso si la solicitud no es POST
+    # (puedes agregar más lógica aquí si es necesario)
+    return redirect('Productos')
+
+
+@login_required
+def agregar_al_carrito(request):
+    if request.method == "POST":
+        nombre = request.POST.get('nombre')
+        precio = request.POST.get('precio')
+
+        # Obtener o crear el carrito del usuario
+        carrito, creado = Carrito.objects.get_or_create(usuario=request.user)
+
+        # Crear un nuevo artículo
+        nuevo_articulo = articulo(nombre=nombre, precio=precio)
+
+        # Guardar el nuevo artículo en la base de datos
+        nuevo_articulo.save()
+
+        # Agregar el artículo al carrito del usuario
+        carrito.articulos.add(nuevo_articulo)
+
+        # Redireccionar al usuario a donde desees
+        return redirect(request.META.get('HTTP_REFERER', 'Productos'))
+
+    # Maneja el caso si la solicitud no es POST
+    # (puedes agregar más lógica aquí si es necesario)
+    return redirect('Productos')
+
+def iniciar_pago(request):
+    if request.method == "POST":
+        # Obtener el carrito del usuario actual
+        carrito, creado = Carrito.objects.get_or_create(usuario=request.user)
+        
+        # Obtener los productos en el carrito
+        productos = carrito.articulos.all()
+        
+        # Calcular el total
+        total = sum(producto.precio for producto in productos)
+        
+        if total > 0:
+            session_key = request.session.session_key
+            buy_order = hashlib.md5(session_key.encode()).hexdigest()[:26]
+            session_id = f"sesion_{session_key}"
+            amount = total
+            return_url = request.build_absolute_uri(reverse('confirmar_pago'))
+
+            tx = Transaction(WebpayOptions(settings.TRANBANK_COMMERCE_CODE, settings.TRANBANK_API_KEY, IntegrationType.TEST))
+            try:
+                response = tx.create(buy_order, session_id, amount, return_url)
+                if response:
+                    return redirect(response['url'] + "?token_ws=" + response['token'])
+                else:
+                    return HttpResponse("No se recibió respuesta de Transbank.")
+            except Exception as e:
+                return HttpResponse(f"Error interno: {str(e)}")
+        else:
+            return HttpResponse("El carrito está vacío.")
+    else:
+        return HttpResponse("Método no permitido.", status=405)
+    
+    
+def confirmar_pago(request):
+    token_ws = request.GET.get('token_ws')
+    if not token_ws:
+        return HttpResponse("Token no proporcionado.")
+
+    try:
+        tx = Transaction(WebpayOptions(settings.TRANBANK_COMMERCE_CODE, settings.TRANBANK_API_KEY, IntegrationType.TEST))
+        response = tx.commit(token_ws)
+        if response and response['status'] == 'AUTHORIZED':
+
+            # Obtener el carrito de la sesión
+            carrito = request.session.get('carrito', {})
+            
+            for producto_id, cantidad in carrito.items():
+                producto = articulo.objects.get(id_articulo=producto_id)
+                print(f"Producto: {producto.nombre}, Cantidad: {cantidad}")
+            
+         
+
+            return render(request, 'confirmacion_pago.html', {'response': response})
+        else:
+            return HttpResponse("No se recibió respuesta de Transbank.")
+    except Exception as e:
+        return HttpResponse(f"Error interno: {str(e)}")
 
 def vaciar_carrito(request):
     if 'carrito' in request.session:
         del request.session['carrito']
     return redirect('mostrar_carrito')
-
-def agregar_al_carrito(request):
-    if request.method == "POST":
-        id_producto = request.POST.get('id_producto')
-        print(f"Producto ID recibido: {id_producto}")
-        
-        if not id_producto:
-            messages.error(request, "No se pudo añadir el producto al carrito. ID del producto no recibido.")
-            return redirect('Pintura')
-        
-        carrito = request.session.get('carrito', {})
-        total_productos = sum(carrito.values())
-        print(f"Total de productos antes de añadir: {total_productos}")
-        print(f"Contenido del carrito antes de añadir: {carrito}")
-
-        if total_productos < 10:
-            if id_producto in carrito:
-                carrito[id_producto] += 1
-            else:
-                carrito[id_producto] = 1
-            request.session['carrito'] = carrito
-            messages.success(request, "Producto añadido al carrito.")
-        else:
-            messages.error(request, "No puedes añadir más de 10 productos en una sola compra.")
-        
-        print(f"Contenido del carrito después de añadir: {carrito}")
-        
-    return redirect('Pintura')

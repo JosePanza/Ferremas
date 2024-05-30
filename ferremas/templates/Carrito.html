@@ -7,78 +7,43 @@
 
 <h1>Carrito de Compras</h1>
 
-{% if Productos %}
+{% if articulos %}
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Nombre del Producto</th>  
+                <th>Nombre del Artículo</th>  
                 <th>Precio</th>
+                <th>Total</th>
             </tr>
         </thead>
         <tbody>
-            {% for producto in Productos %}
+            {% for articulo in articulos %}
             <tr>
-                <td>{{ producto.nombre }}</td>            
-                <td>${{ producto.precio }}</td>
+                <td>{{ articulo.nombre }}</td>            
+                <td>${{ articulo.precio }}</td>
             </tr>
             {% endfor %}
+                <tr>
+                <td colspan="3"><strong>Total:</strong></td>
+                <td><strong>${{ total }}</strong></td>
+                </tr>
+            
+    
         </tbody>
     </table>
+    
+    <form action="{% url 'vaciar_carrito' %}" method="post" class="d-inline">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Vaciar Carrito</button>
+    </form>
+    <form action="{% url 'iniciar_pago' %}" method="post" class="d-inline">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Comprar</button>
+    </form>
 {% else %}
-<table class="table table-striped">
-<thead>
-    <tr>
-        <th>Nombre del Producto</th>
-        <th>Precio</th>
-    </tr>
-</thead>
-</table>
-    <p>No hay productos en el carrito.</p>
+    <p>No hay artículos en el carrito.</p>
 {% endif %}
 
 <a href="{% url 'inicio' %}" class="btn btn-primary">Volver a la Tienda</a>
-
-<div class="container mt-5">
-    <h1>Carrito de Compras</h1>
-    {% if productos %}
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Producto</th>
-                    <th>Cantidad</th>
-                    <th>Precio</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for producto in productos %}
-                    <tr>
-                        <td>{{ producto.nombre }}</td>
-                        <td>${{ producto.precio }}</td>
-                    </tr>
-                {% endfor %}
-                <tr>
-                    <td colspan="3"><strong>Total:</strong></td>
-                    <td><strong>${{ total }}</strong></td>
-                </tr>
-            </tbody>
-        </table>
-        <form action="{% url 'vaciar_carrito' %}" method="post" class="d-inline">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-danger">Vaciar Carrito</button>
-        </form>
-        <form action="{% url 'iniciar_pago' %}" method="post" class="d-inline">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-primary">Comprar</button>
-        </form>
-    {% else %}
-        <div class="alert alert-warning" role="alert">
-            El carrito está vacío.
-        </div>
-    {% endif %}
-    <br>
-    <a href="{% url 'Productos' %}" class="btn btn-secondary mt-3">Volver a la Página Principal</a>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
 {% endblock %}

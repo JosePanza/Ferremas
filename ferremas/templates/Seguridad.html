@@ -5,42 +5,59 @@
 <h1>Nuestros productos</h1>
 
 <!-- Tarjeta de producto 1 -->
-<div class="product-card">
+<div class="product-card" data-id-articulo="1">
     <h2>Casco de seguridad</h2>
     <img src="https://segurycel.vteximg.com.br/arquivos/ids/160004-1000-1000/PS50YER-1500.jpg?v=637453664847970000" alt="Imagen del Producto 1" style="width: 200px; height: auto;">
-    <p>Precio: $4.990</p>
-    <form method="post" action="{% url 'mostrar_carrito' %}">
+    <p>Precio: $13.990</p>
+    <form action="{% url 'agregar_al_carrito' %}" method="post" class="d-inline" id="form-agregar-al-carrito-2">
         {% csrf_token %}
-        <input type="hidden" name="producto_id" value="1">
-        <button type="submit">Agregar al carrito</button>
+        <!-- Agrega un campo oculto para el nombre del producto -->
+        <input type="hidden" name="nombre" id="nombre" value="Casco de seguridad">
+        <!-- Agrega un campo oculto para el precio del producto -->
+        <input type="hidden" name="precio" id="precio" value="13990">
+        <input type="hidden" name="id_articulo" id="id_articulo" value="">
+        <input type="hidden" name="unique_id" value="{{ unique_id }}">
+        <button type="submit" class="btn btn-secondary">Añadir al carrito</button>
     </form>
-    <!-- Agrega más detalles según sea necesario -->
 </div>
 
+
 <!-- Tarjeta de producto 2 -->
-<div class="product-card">
+<div class="product-card" data-id-articulo="2">
     <h2>Chaleco de seguridad</h2>
     <img src="https://http2.mlstatic.com/D_NQ_NP_874564-MLC71561169650_092023-O.webp" alt="Imagen del Producto 2" style="width: 200px; height: auto;">
     <p>Precio: $2.990</p>
-    <form method="post" action="{% url 'mostrar_carrito' %}">
+    <form action="{% url 'agregar_al_carrito' %}" method="post" class="d-inline" id="form-agregar-al-carrito-2">
         {% csrf_token %}
-        <input type="hidden" name="producto_id" value="1">
-        <button type="submit">Agregar al carrito</button>
+        <!-- Agrega un campo oculto para el nombre del producto -->
+        <input type="hidden" name="nombre" value="Chaleco de seguridad">
+        <!-- Agrega un campo oculto para el precio del producto -->
+        <input type="hidden" name="precio" value="2990">
+        <input type="hidden" name="id_articulo" value="2">
+        <input type="hidden" name="unique_id" value="{{ unique_id }}">
+        <button type="submit" class="btn btn-secondary">Añadir al carrito</button>
     </form>
-    <!-- Agrega más detalles según sea necesario -->
 </div>
 
-<div class="product-card">
-    <h2>zapatos de seguridad</h2>
-    <img src="https://www.macme.cl/cdn/shop/files/Botin_de_seguridad_proflex_115_n_unisex_120230905-5258-1t0it33_2000x.jpg?v=1713566471" alt="Imagen del Producto 2" style="width: 200px; height: auto;">
+<!-- Tarjeta de producto 3 -->
+<div class="product-card" data-id-articulo="3">
+    <h2>Zapatos de seguridad</h2>
+    <img src="https://www.macme.cl/cdn/shop/files/Botin_de_seguridad_proflex_115_n_unisex_120230905-5258-1t0it33_2000x.jpg?v=1713566471" alt="Imagen del Producto 3" style="width: 200px; height: auto;">
     <p>Precio: $43.990</p>
-    <form method="post" action="{% url 'mostrar_carrito' %}">
+    <form action="{% url 'agregar_al_carrito' %}" method="post" class="d-inline" id="form-agregar-al-carrito-3">
         {% csrf_token %}
-        <input type="hidden" name="producto_id" value="1">
-        <button type="submit">Agregar al carrito</button>
+        <!-- Agrega un campo oculto para el nombre del producto -->
+        <input type="hidden" name="nombre" value="Zapatos de seguridad">
+        <!-- Agrega un campo oculto para el precio del producto -->
+        <input type="hidden" name="precio" value="43990">
+        <input type="hidden" name="id_articulo" value="3">
+        <input type="hidden" name="unique_id" value="{{ unique_id }}">
+        <button type="submit" class="btn btn-secondary">Añadir al carrito</button>
     </form>
-    <!-- Agrega más detalles según sea necesario -->
 </div>
+
+
+
 
 <!-- Agrega más tarjetas de productos según sea necesario -->
 
