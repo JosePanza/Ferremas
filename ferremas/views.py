@@ -132,7 +132,7 @@ def iniciar_pago(request):
     if request.method == "POST":
         # Obtener el carrito del usuario actual
         carrito, creado = Carrito.objects.get_or_create(usuario=request.user)
-        
+
         # Obtener los productos en el carrito
         productos = carrito.articulos.all()
         
@@ -186,7 +186,3 @@ def confirmar_pago(request):
     except Exception as e:
         return HttpResponse(f"Error interno: {str(e)}")
 
-def vaciar_carrito(request):
-    if 'carrito' in request.session:
-        del request.session['carrito']
-    return redirect('mostrar_carrito')
