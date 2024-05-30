@@ -2,78 +2,75 @@
 
 {% block body %}
 {% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-<!-- Bootstrap Carousel -->
-<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-    </div>
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-       
-      <img src="{% static 'img/central.png' %}" class="d-block w-100" height="550">
-      </div>
-      <div class="carousel-item">
-        <img src="{% static 'img/herra1.jpg' %}" class="d-block w-100" height="550">
-        <div class="carousel-caption d-flex justify-content-center align-items-center">
-          
-        </div>
-      </div>
-      <div class="carousel-item">
-        <img src="{% static 'img/herra2.jpg' %}" class="d-block w-100" height="550">
-        <div class="carousel-caption d-flex justify-content-center align-items-center">
-          
-        </div>
-      </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Bienvenido a Hospital Galenos</title>
+    <title>Bienvenido a Ferremas</title>
     <!-- Tus enlaces a hojas de estilo, Bootstrap, etc. -->
 </head>
 <body>
-    <header>
-        <!-- Tu encabezado con el menú de navegación -->
-        <!-- Puedes incluir el mismo menú de navegación que ya tienes en tu base.html -->
-    </header>
-
-    <main>
-        <div class="container">
-            <h1>Bienvenido a Ferremas</h1>
-            <p>Somos una ferreteria comprometida con nuestros clientes.</p>
-            
-            <h2>Nuestros Servicios</h2>
-            <ul>
-                <li>Atención médica integral</li>
-                <li>Especialidades médicas</li>
-                <li>Cuidado de emergencia las 24 horas</li>
-                <li>Exámenes y análisis clínicos</li>
-                <!-- Otros servicios -->
-            </ul>
-            
-            <h2>¿Por qué elegirnos?</h2>
-            <p>Nuestro equipo de profesionales altamente capacitados se esfuerza por brindar atención unica y de calidad a cada uno de sus cliente. </p>
+<header>
+  <div class="header-content container">
+    <div class="header-txt">
+    <span>Bienvenido a Ferremas</span>
+    <p>En FERREMAS, estamos comprometidos a ofrecerle los mejores productos de ferretería y construcción, 
+       con la calidad y el servicio que usted merece. 
+       Nuestra plataforma en línea está diseñada para brindarle una experiencia de compra fácil, 
+       rápida y segura, desde la comodidad de su hogar o lugar de trabajo.</p>
+       <span>¿Qué encontrará en nuestro sitio web?</span>
+       <ul>
+        <li><b>Catálogo Completo:</b> Explore una amplia gama de productos de ferretería, 
+            herramientas, materiales de construcción y más. Ya sea que esté realizando un 
+            pequeño proyecto en casa o una gran obra, aquí encontrará todo lo que necesita.
+        </li>
+        <li><b>Ofertas Exclusivas:</b> Disfrute de promociones especiales y descuentos exclusivos 
+            solo disponibles en nuestra tienda en línea.
+        </li>
+        <li><b>Compra Segura:</b> Realice sus pedidos de manera segura con nuestras opciones de pago en línea, 
+            incluyendo tarjetas de crédito y débito.
+        </li>
+      </ul>
+    
+    </div>
+    <div class="header-img">
+      <img src="{% static 'img/02.jpg' %}" alt="">
+    </div>
+  </div>
+      
+      <section class="oferts container">
+        <div class="ofert-1 b1">
+          <h3>Lorem</h3>
+          <a href="#">Leer más...</a>
         </div>
-    </main>
+        <div class="ofert-img">
+          <img src="imagen/asdas" alt="">
+        </div>
+        <div class="ofert-1 b2">
+          <h3>Lorem</h3>
+          <a href="#">Leer más...</a>
+        </div>
+        <div class="ofert-img">
+          <img src="imagen/asdas2" alt="">
+        </div>
+        <div class="ofert-1 b3">
+          <h3>Lorem</h3>
+          <a href="#">Leer más...</a>
+        </div>
+        <div class="ofert-img">
+          <img src="imagen/asdas3" alt="">
+        </div>
+      </section>
+    
+</header>
 
-    <footer>
-        <div class="container">
+<footer>
+        <div class="footer-content">
             <!-- Información de contacto, enlaces útiles, derechos de autor, etc. -->
         </div>
-    </footer>
+</footer>
     
     <!-- Tus scripts, incluyendo Bootstrap si es necesario -->
 </body>
