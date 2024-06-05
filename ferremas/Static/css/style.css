@@ -235,14 +235,7 @@ h2 {
     gap: 20px;
 }
 
-.box {
-    border-top: 2px solid #9BCE21;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 5px 10px rgb(0, 0, 0, 0.2);
-    background-color: #f6fafb;
-    display: none;
-}
+
 
 .box:nth-child(1),
 .box:nth-child(2),

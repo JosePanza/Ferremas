@@ -150,7 +150,7 @@ def iniciar_pago(request):
             try:
                 response = tx.create(buy_order, session_id, amount, return_url)
                 if response:
-                    return redirect(response['url'] + "?token_ws=" + response['token'])
+                    return redirect(response['rechazo_pago.html'] + "?token_ws=" + response['token'])
                 else:
                     return HttpResponse("No se recibió respuesta de Transbank.")
             except Exception as e:
