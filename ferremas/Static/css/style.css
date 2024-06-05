@@ -104,10 +104,11 @@ img{
 
 table {
     width: 100%;
+    background-color: #bd9f1d;
 }
 
 th, td{
-    color: #fff;
+    color: #000000;
 }
 
 .borrar {
@@ -445,6 +446,38 @@ h2 {
     .footer-content {
         flex-direction: column;
         text-align: center;
+    }
+
+    .table-container {
+        margin-top: 20px;
+        background-color: #000000;
+    }
+    
+    .total-row {
+        font-weight: bold;
+        background-color: #f8f9fa;
+    }
+    
+    .d-inline {
+        display: inline-block;
+        margin: 0 10px;
+    }
+    
+    .table td, .table th {
+        vertical-align: middle;
+    }
+    
+    .table th {
+        background-color: #ffffff;
+        color: rgb(255, 255, 255);
+    }
+    
+    .table td {
+        background-color: #fff;
+    }
+    
+    .table td:nth-child(2), .table td:nth-child(3) {
+        text-align: right;
     }
 
 
