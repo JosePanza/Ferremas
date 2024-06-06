@@ -103,30 +103,34 @@ def vaciar_carrito(request):
     return redirect('Productos')
 
 
-@login_required
 def agregar_al_carrito(request):
-    if request.method == "POST":
-        nombre = request.POST.get('nombre')
-        precio = request.POST.get('precio')
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            nombre = request.POST.get('nombre')
+            precio = request.POST.get('precio')
 
-        # Obtener o crear el carrito del usuario
-        carrito, creado = Carrito.objects.get_or_create(usuario=request.user)
+            # Obtener o crear el carrito del usuario
+            carrito, creado = Carrito.objects.get_or_create(usuario=request.user)
 
-        # Crear un nuevo artículo
-        nuevo_articulo = articulo(nombre=nombre, precio=precio)
+            # Crear un nuevo artículo
+            nuevo_articulo = articulo(nombre=nombre, precio=precio)
 
-        # Guardar el nuevo artículo en la base de datos
-        nuevo_articulo.save()
+            # Guardar el nuevo artículo en la base de datos
+            nuevo_articulo.save()
 
-        # Agregar el artículo al carrito del usuario
-        carrito.articulos.add(nuevo_articulo)
+            # Agregar el artículo al carrito del usuario
+            carrito.articulos.add(nuevo_articulo)
 
-        # Redireccionar al usuario a donde desees
+            # Redireccionar al usuario a donde desees
+            return redirect(request.META.get('HTTP_REFERER', 'Productos'))
+
+        # Maneja el caso si la solicitud no es POST
+        # (puedes agregar más lógica aquí si es necesario)
+        return redirect('Productos')
+    else:
+        messages.error(request, "Debes estar autenticado para agregar artículos al carrito.")
         return redirect(request.META.get('HTTP_REFERER', 'Productos'))
-
-    # Maneja el caso si la solicitud no es POST
-    # (puedes agregar más lógica aquí si es necesario)
-    return redirect('Productos')
+        
 
 def iniciar_pago(request):
     if request.method == "POST":
@@ -150,7 +154,7 @@ def iniciar_pago(request):
             try:
                 response = tx.create(buy_order, session_id, amount, return_url)
                 if response:
-                    return redirect(response['rechazo_pago.html'] + "?token_ws=" + response['token'])
+                    return redirect(response['url'] + "?token_ws=" + response['token'])
                 else:
                     return HttpResponse("No se recibió respuesta de Transbank.")
             except Exception as e:
@@ -170,19 +174,23 @@ def confirmar_pago(request):
         tx = Transaction(WebpayOptions(settings.TRANBANK_COMMERCE_CODE, settings.TRANBANK_API_KEY, IntegrationType.TEST))
         response = tx.commit(token_ws)
         if response and response['status'] == 'AUTHORIZED':
-
             # Obtener el carrito de la sesión
             carrito = request.session.get('carrito', {})
             
             for producto_id, cantidad in carrito.items():
-                producto = articulo.objects.get(id_articulo=producto_id)
-                print(f"Producto: {producto.nombre}, Cantidad: {cantidad}")
-            
-         
+                try:
+                    producto = articulo.objects.get(id_articulo=producto_id)
+                    print(f"Producto: {producto.nombre}, Cantidad: {cantidad}")
+                except articulo.DoesNotExist:
+                    return HttpResponse(f"Producto con id {producto_id} no encontrado.")
+
+            # Aquí puedes limpiar el carrito si es necesario
+            # request.session['carrito'] = {}
 
             return render(request, 'confirmacion_pago.html', {'response': response})
         else:
-            return HttpResponse("No se recibió respuesta de Transbank.")
+            return render(request, 'rechazo_pago.html', {'response': response})
     except Exception as e:
         return HttpResponse(f"Error interno: {str(e)}")
+
 

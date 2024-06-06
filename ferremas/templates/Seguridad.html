@@ -4,6 +4,16 @@
 
 <h1>Nuestros productos</h1>
 
+
+{% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{% if message.tags %} {{ message.tags }} {% endif %}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+
 <!-- Tarjeta de producto 1 -->
 <div class="product-card" data-id-articulo="1">
     <h2>Casco de seguridad</h2>
