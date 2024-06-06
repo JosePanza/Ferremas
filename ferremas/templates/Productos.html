@@ -1,8 +1,15 @@
 {% extends 'base.html' %}
 
 {% block body %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-<h1>Nuestros productos</h1>
+
+<br><br>
+<div class="header-content container">
+<div class="header-txt">
+<h1>Herramientas</h1>
+
 
 {% if messages %}
         <ul class="messages">
@@ -11,7 +18,9 @@
             {% endfor %}
         </ul>
     {% endif %}
+<div class="box-container" id="lista-1">
 <!-- Tarjeta de producto 1 -->
+<div class="box">
 <div class="product-card" data-id-articulo="1">
     <h2 class="nombre">Taladro</h2>
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4sKI1wDShd0KVa4CR-fDrMBMu7VN_I4UtC2lTUDw6XQ&s" alt="Imagen del Producto 1" style="width: 200px; height: auto;">
@@ -29,8 +38,10 @@
     </form>
     
 </div>
+</div>
 
 <!-- Tarjeta de producto 2 -->
+<div class="box">
 <div class="product-card" data-id-articulo="2">
     <h2 class="nombre">Sierra</h2>
     <img src="https://http2.mlstatic.com/D_NQ_NP_787080-MLA53616798949_022023-O.webp" alt="Imagen del Producto 2" style="width: 200px; height: auto;">
@@ -47,8 +58,10 @@
         <button type="submit" class="btn btn-secondary">Agregar al carrito</button>
     </form>
 </div>
+</div>
 
 <!-- Tarjeta de producto 3 -->
+<div class="box">
 <div class="product-card" data-id-articulo="3">
     <h2 class="nombre">Lijadora eléctrica</h2>
     <img src="https://imagedelivery.net/4fYuQyy-r8_rpBpcY7lH_A/sodimacCL/45298X_01/w=800,h=800" alt="Imagen del Producto 3" style="width: 200px; height: auto;">
@@ -65,8 +78,12 @@
         <button type="submit" class="btn btn-secondary">Agregar al carrito</button>
     </form>
 </div>
+</div>
 
+</div>
 
 <!-- Agrega más tarjetas de productos según sea necesario -->
-
+</div>
+</div>
+<br><br>
 {% endblock %}

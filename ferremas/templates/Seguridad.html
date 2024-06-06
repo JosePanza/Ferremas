@@ -1,8 +1,13 @@
 {% extends 'base.html' %}
 
 {% block body %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-<h1>Nuestros productos</h1>
+<br><br>
+<div class="header-content container">
+ <div class="header-txt">
+<h1>Seguridad</h1>
 
 
 {% if messages %}
@@ -13,8 +18,10 @@
         </ul>
     {% endif %}
 
-
+<div class="box-container" id="lista-1">
 <!-- Tarjeta de producto 1 -->
+
+<div class="box">
 <div class="product-card" data-id-articulo="1">
     <h2>Casco de seguridad</h2>
     <img src="https://segurycel.vteximg.com.br/arquivos/ids/160004-1000-1000/PS50YER-1500.jpg?v=637453664847970000" alt="Imagen del Producto 1" style="width: 200px; height: auto;">
@@ -29,6 +36,7 @@
         <input type="hidden" name="unique_id" value="{{ unique_id }}">
         <button type="submit" class="btn btn-secondary">Añadir al carrito</button>
     </form>
+</div>
 </div>
 
 
@@ -65,8 +73,12 @@
         <button type="submit" class="btn btn-secondary">Añadir al carrito</button>
     </form>
 </div>
+<br><br>
 
+</div>
 
+</div>
+</div>
 
 
 <!-- Agrega más tarjetas de productos según sea necesario -->

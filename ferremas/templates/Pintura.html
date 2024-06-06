@@ -2,7 +2,13 @@
 
 {% block body %}
 {% load static %}
-<h1>Nuestras Pinturas y Esmaltes</h1>
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+
+<br><br>
+<div class="header-content container">
+    <div class="header-txt">
+      <h1>Pinturas y Esmaltes</h1>
 
 {% if messages %}
         <ul class="messages">
@@ -12,7 +18,10 @@
         </ul>
     {% endif %}
 
+
+<div class="box-container" id="lista-1">
 <!-- Tarjeta de producto 1 -->
+<div class="box">
 <div class="product-card" data-id-articulo="1">
     <h2 class="nombre">Esmalte al agua</h2>
     <img src="https://http2.mlstatic.com/D_NQ_NP_613308-MLA74406138908_022024-O.webp" alt="Imagen del Producto 1" style="width: 200px; height: auto;">
@@ -29,12 +38,12 @@
         <button type="submit" class="btn btn-secondary">Añadir al carrito</button>
     </form>
 </div>
-
-
+</div>
 
 
 
 <!-- Tarjeta de producto 2 -->
+<div class="box">
 <div class="product-card" data-id-articulo="2">
     <h2 class="nombre">Pintura cafe</h2>
     <img src="https://www.ferreteriacerda.cl/autoadministracion/bodegatec/catalogo/fotos_chicas/208-1.jpeg" alt="Imagen del Producto 2" style="width: 200px; height: auto;">
@@ -51,8 +60,10 @@
         <button type="submit" class="btn btn-secondary">Añadir al carrito</button>
     </form>
 </div>
+</div>
 
 <!-- Tarjeta de producto 3 -->
+<div class="box">
 <div class="product-card" data-id-articulo="3">
     <h2 class="nombre">Pintura verde</h2>
     <img src="https://ferreteriaferromaq.cl/wp-content/uploads/2021/04/rrss-2-2.png" alt="Imagen del Producto 3" style="width: 200px; height: auto;">
@@ -68,6 +79,7 @@
         <input type="hidden" name="unique_id" value="{{ unique_id }}">
         <button type="submit" class="btn btn-secondary">Añadir al carrito</button>
     </form>
+</div>
 </div>
 
 
@@ -85,7 +97,11 @@
         });
     });
 </script>
-    
+</div>
+
+</div>
+</div>
+<br><br>    
 <!-- <script src="{% static 'js/cart.js' %}"></script> -->
 
 {% endblock %}

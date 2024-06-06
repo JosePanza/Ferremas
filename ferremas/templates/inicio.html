@@ -13,66 +13,88 @@
 </head>
 <body>
 <header>
+  <br><br>
   <div class="header-content container">
     <div class="header-txt">
-    <span>Bienvenido a Ferremas</span>
+    <h1>Bienvenido a Ferremas</h1>
     <p>En FERREMAS, estamos comprometidos a ofrecerle los mejores productos de ferretería y construcción, 
        con la calidad y el servicio que usted merece. 
        Nuestra plataforma en línea está diseñada para brindarle una experiencia de compra fácil, 
        rápida y segura, desde la comodidad de su hogar o lugar de trabajo.</p>
-       <span>¿Qué encontrará en nuestro sitio web?</span>
-       <ul>
-        <li><b>Catálogo Completo:</b> Explore una amplia gama de productos de ferretería, 
-            herramientas, materiales de construcción y más. Ya sea que esté realizando un 
-            pequeño proyecto en casa o una gran obra, aquí encontrará todo lo que necesita.
-        </li>
-        <li><b>Ofertas Exclusivas:</b> Disfrute de promociones especiales y descuentos exclusivos 
-            solo disponibles en nuestra tienda en línea.
-        </li>
-        <li><b>Compra Segura:</b> Realice sus pedidos de manera segura con nuestras opciones de pago en línea, 
-            incluyendo tarjetas de crédito y débito.
-        </li>
-      </ul>
-    
+
+      <div class="butons">
+        <a href="{% url 'Productos'%}" class="btn-1">Herramientas</a>
+        <a href="#" class="btn-1">Leer más...</a>
+      </div>    
     </div>
     <div class="header-img">
-      <img src="{% static 'img/02.jpg' %}" alt="">
+      <img src="{% static 'img/04.jpg' %}" alt="">
     </div>
   </div>
       
       <section class="oferts container">
         <div class="ofert-1 b1">
+          <div class="ofert-text">
           <h3>Lorem</h3>
           <a href="#">Leer más...</a>
+          </div>
+          <div class="ofert-img">
+            <img src="{% static 'img/01.png' %}" alt="">
+          </div>
         </div>
-        <div class="ofert-img">
-          <img src="{% static 'img/01.jpg' %}" alt="">
-        </div>
+
         <div class="ofert-1 b2">
+          <div class="ofert-text">
           <h3>Lorem</h3>
           <a href="#">Leer más...</a>
+          </div>
+          <div class="ofert-img">
+            <img src="{% static 'img/01.jpg' %}" alt="">
+          </div>
         </div>
-        <div class="ofert-img">
-          <img src="{% static 'img/herra1.jpg' %}" alt="">
-        </div>
+
         <div class="ofert-1 b3">
+          <div class="ofert-text">
           <h3>Lorem</h3>
           <a href="#">Leer más...</a>
+          </div>
+          <div class="ofert-img">
+            <img src="{% static 'img/01.jpg' %}" alt="">
+          </div>
         </div>
-        <div class="ofert-img">
-          <img src="{% static 'img/herra2.jpg' %}" alt="">
+      </section> 
+      <section class="testimonial container">
+        <span>Opiniones de clientes</span>
+        <h2>Algunos testimonios</h2>
+        <div class="testimonial-content">
+          <div class="testimonial-1">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+              sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
+              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat 
+              nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
+              sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <img src="{% static 'img/starts.png' %}" alt="">
+            <h4>— por Lorem impsum</h4>
+          </div>
+          <div class="testimonial-1">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+              sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
+              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat 
+              nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
+              sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <img src="{% static 'img/starts.png' %}" alt="">
+            <h4>— por Lorem impsum</h4>
+          </div>
         </div>
+        
       </section>
-    
+
 </header>
 
-<footer>
-        <div class="footer-content">
-            <!-- Información de contacto, enlaces útiles, derechos de autor, etc. -->
-        </div>
-</footer>
-    
-    <!-- Tus scripts, incluyendo Bootstrap si es necesario -->
 </body>
 </html>
 
